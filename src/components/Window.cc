@@ -4,7 +4,7 @@
 #include "Window.h"
 
 Window::Window(int l_, int i_, int j_, int w1_, int w2_) 
-		: l(l_), i(i_), j(j_), w1(w1_), w2(w2_), weight(0), intrEnergy(0) {}
+        : l(l_), i(i_), j(j_), w1(w1_), w2(w2_), weight(0), intrEnergy(0) {}
 
 Window::Window(int l_, int i_, int j_, int w1_, int w2_, double weight_, double intrEnergy_) 
         : l(l_), i(i_), j(j_), w1(w1_), w2(w2_), weight(weight_), intrEnergy(intrEnergy_) 
@@ -71,7 +71,7 @@ bool Window::operator< (Window &win)
 bool Window::operator== (Window &I2)
 {
     if(l == I2.l && i == I2.i && j == I2.j && w1 == I2.w1 && w2 == I2.w2)
-    	return true;
+        return true;
     
     return false;
 }
@@ -127,9 +127,9 @@ bool Window::operator!= (Window &I2)
 
 std::ostream& operator<<(std::ostream& os, const Window& I)
 {
-	// os << "(" << I.l << ", " << I.i << ", " << I.j << ", " << I.w1 << ", " << I.w2 << ")";
+    // os << "(" << I.l << ", " << I.i << ", " << I.j << ", " << I.w1 << ", " << I.w2 << ")";
     os << "(" << I.rna1 << ", " << I.rna2  << ", " << I.i << ", " << I.j << ", " << I.w1 << ", " << I.w2 << ")";
-	return os;
+    return os;
 }
 
 string Window::toString() const

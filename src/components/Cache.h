@@ -11,15 +11,15 @@ using namespace std;
 class Cache
 {
 private:
-	// unordered_map<string, SubEnsemble*> matching_hashtable;
-	unordered_map<string, Config> matching_hashtable;
+    // unordered_map<string, SubEnsemble*> matching_hashtable;
+    unordered_map<string, Config> matching_hashtable;
 
 public:
-	Cache();
-	// void AddSubEnsemble(SubEnsemble * subensemble);
-	// SubEnsemble * GetEnsemble(string stringRep);
-	void AddConfig(string, Config);
-	Config GetConfig(string);
+    Cache();
+    // void AddSubEnsemble(SubEnsemble * subensemble);
+    // SubEnsemble * GetEnsemble(string stringRep);
+    void AddConfig(string, Config);
+    Config GetConfig(string);
 };
 
 #endif

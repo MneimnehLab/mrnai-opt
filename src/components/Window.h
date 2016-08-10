@@ -10,29 +10,29 @@ using namespace std;
 
 struct Window
 {
-	int l,i,j,w1,w2;
+  int l,i,j,w1,w2;
   int rna1, rna2;
   double weight;
   double intrEnergy;
 
-	Window(int, int, int, int, int) ;
+  Window(int, int, int, int, int) ;
   Window(int, int, int, int, int, double, double) ;
   Window(int, int, int, int, int, int, double) ;
 
-	Window(std::string) ;
-	
-	bool operator< (Window &I2);
-	bool operator== (Window &I2);
-	bool operator!= (Window &I2);	
-	friend bool operator== (const Window& wA, const Window& wB);
+  Window(std::string) ;
+  
+  bool operator< (Window &I2);
+  bool operator== (Window &I2);
+  bool operator!= (Window &I2); 
+  friend bool operator== (const Window& wA, const Window& wB);
   friend bool operator!= (const Window& wA, const Window& wB);
   friend bool operator< (const Window& wA, const Window& wB);
 
-	bool overlaps(Window);
-	string toString() const;
+  bool overlaps(Window);
+  string toString() const;
   string toStringW() const;
 
-	static std::vector<Window>* createWindowSetFromPyString(std::string line);
+  static std::vector<Window>* createWindowSetFromPyString(std::string line);
 
   void prettyPrint();
 };

@@ -9,10 +9,10 @@ using namespace std;
 class Parser
 {
 public:
-	static vector<string> ReadAndTokenizeAmpersand();
-	static void ReadEvenOdd(vector<OrigRNASeq> & origRNASequences);
-	static vector<OrigRNASeq> GetAndParseInput();
-	static CmdLineArgs * ParseArgs(int argc, char ** argv);
+    static vector<string> ReadAndTokenizeAmpersand();
+    static void ReadEvenOdd(vector<OrigRNASeq> & origRNASequences);
+    static vector<OrigRNASeq> GetAndParseInput();
+    static CmdLineArgs * ParseArgs(int argc, char ** argv);
 };
 
 #endif

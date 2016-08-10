@@ -10,19 +10,19 @@ using namespace std;
 class Weights
 {
 private:
-	double ***** rnaupCollections;
-	int matchingMatrix[10][10];
+    double ***** rnaupCollections;
+    int matchingMatrix[10][10];
 
-	string dirPath;
-	vector<OrigRNASeq> * origRNASequences;
+    string dirPath;
+    vector<OrigRNASeq> * origRNASequences;
 
 public:
-	Weights(string dirPath, vector<OrigRNASeq> * origRNASequences);
-	void Read();
-	void ReadOneFile(int evenId, int oddId, int location);
+    Weights(string dirPath, vector<OrigRNASeq> * origRNASequences);
+    void Read();
+    void ReadOneFile(int evenId, int oddId, int location);
 
-	int MatchingMatrixVal(int, int);
-	double **** GetWeightsTable(int);
+    int MatchingMatrixVal(int, int);
+    double **** GetWeightsTable(int);
 };
 
 #endif

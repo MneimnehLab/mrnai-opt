@@ -15,52 +15,52 @@ void printTime() {}
 
 int main(int argc, char *argv[])
 {
-	
-	CmdLineArgs * args = Parser::ParseArgs(argc, argv);
-	vector<OrigRNASeq> origRNASequences = Parser::GetAndParseInput();
-	int numOfRNA = origRNASequences.size();
+    
+    CmdLineArgs * args = Parser::ParseArgs(argc, argv);
+    vector<OrigRNASeq> origRNASequences = Parser::GetAndParseInput();
+    int numOfRNA = origRNASequences.size();
 
-	Cache matchingCache;
+    Cache matchingCache;
 
-	// string dir = "../rnaup_weights/output/";
-	// string dir = "../output/";
-	string dir = "output/";
-	Weights weights(dir, &origRNASequences);
-	weights.Read();
+    // string dir = "../rnaup_weights/output/";
+    // string dir = "../output/";
+    string dir = "output/";
+    Weights weights(dir, &origRNASequences);
+    weights.Read();
 
-	Chain chain(&origRNASequences, numOfRNA);
-	// vector<int>v {0,1,3,2};
-	// Chain chain = Chain::makeGivenChain(&origRNASequences, v);
-	chain.printFlatStruct();
-	chain.determineStruct();
+    Chain chain(&origRNASequences, numOfRNA);
+    // vector<int>v {0,1,3,2};
+    // Chain chain = Chain::makeGivenChain(&origRNASequences, v);
+    chain.printFlatStruct();
+    chain.determineStruct();
 
-	if(args->k > chain.getBBHeight())
-		args->k = chain.getBBHeight();
-	LevelGroupProcessor lgProc(args->k, &chain, &weights);
-	
-	vector<vector<int> > x = lgProc.GetAllGroupings();
+    if(args->k > chain.getBBHeight())
+        args->k = chain.getBBHeight();
+    LevelGroupProcessor lgProc(args->k, &chain, &weights);
+    
+    vector<vector<int> > x = lgProc.GetAllGroupings();
 
-	double minEnergy = 0;
-	Config minConfig;
+    double minEnergy = 0;
+    Config minConfig;
 
-	for(int groupNum=0; groupNum<x.size(); groupNum++)
-	{
-		Config c;
-		lgProc.prepareWithSubsets(groupNum, c);
-		if(minEnergy > c.totalWeight())
-		{
-			minEnergy = c.totalWeight();
-			minConfig = c;
-		}
-	}
+    for(int groupNum=0; groupNum<x.size(); groupNum++)
+    {
+        Config c;
+        lgProc.prepareWithSubsets(groupNum, c);
+        if(minEnergy > c.totalWeight())
+        {
+            minEnergy = c.totalWeight();
+            minConfig = c;
+        }
+    }
 
-	cout << endl
-		 << "Minimum Energy: " << minEnergy << endl
-		 << "Structure: " << endl;
-	for(auto w: minConfig)
-		w.prettyPrint();
-	
-	return 0;
+    cout << endl
+         << "Minimum Energy: " << minEnergy << endl
+         << "Structure: " << endl;
+    for(auto w: minConfig)
+        w.prettyPrint();
+    
+    return 0;
 }
 
 
