@@ -1,0 +1,6 @@
+Starter: e0 | o1 
+
+Energy: -61.153202 	| First = 2
+
+
+

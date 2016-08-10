@@ -1,0 +1,63 @@
+GCAAGCCACCUCGCAGUCCUAUUU&GUCAACUCGUGGUGGCUUGC&GGCGUGGUACAUUACCUGGUACCAGUUGAC&AAAUAGAGAAGCGAACCAGAGAAACACACGCC
+Substrate&FW2&FW1&RzA
+1,3|0,2
+
+
+
+
+
+
+
+
+
+
+Original:
+
+Sbtrt 3' UUUAUCCUGACGCUCCACCGAACG          5'  
+FW2   5' GUCAACUCGUGGUGGCUUGC              3'    
+FW1   3' CAGUUGACCAUGGUCCAUUACAUGGUGCGG    5'
+RzA   5' AAAUAGAGAAGCGAACCAGAGAAACACACGCC  3'    
+
+
+
+
+All 5' -> 3':
+--------------
+
+Sbtrt 5' GCAAGCCACCUCGCAGUCCUAUUU          3'
+FW2   5' GUCAACUCGUGGUGGCUUGC              3'    
+FW1   5' GGCGUGGUACAUUACCUGGUACCAGUUGAC    3'
+RzA   5' AAAUAGAGAAGCGAACCAGAGAAACACACGCC  3'    
+
+
+
+
+
+  
+
+
+
+
+
+Sbtrt              3' UUUAUCCUGACGCU------------CCACCGAACG 5'  
+                      ||||||    ||||            ||||||||||             
+FW2                5' ||||||    ||||  GUCAACUCGUGGUGGCUUGC 3'    
+                      ||||||    ||||  ||||||||||                       
+FW1                3' ||||||    ||||  CAGUUGACCAUGGUCCAUUACAUGGUGCGG 5'
+                      ||||||    ||||            |||||         ||||||   
+RzA                5' AAAUAGAGAAGCGA------------ACCAG--AGAAACACACGCC 3'    
+
+ 
+                       ||||||    ||||
+Sbtrt              3'  UUUAUCCUGACGCUCCACCGAACG 5'  
+                                     ||||||||||             
+FW2                5'      GUCAACUCGUGGUGGCUUGC 3'    
+                           ||||||||||                       
+FW1                3'      CAGUUGACCAUGGUCCAUUACAUGGUGCGG 5'
+                                     |||||         ||||||   
+RzA                5'  AAAUAGAGAAGCGAACCAG--AGAAACACACGCC 3'    
+                       ||||||    ||||
+
+
+
+
