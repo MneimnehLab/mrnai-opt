@@ -22,7 +22,7 @@ int readAndTokenizeRNAs(char **strArray1)
 	char *line___ = NULL;
 	size_t size;
 	int lres = getline(&line___, &size, stdin);
-	char line[200];
+	char line[500];
 	strcpy(line, line___);
 	line[strlen(line___)-1] = '\0';
 	//////////////////////////
@@ -190,7 +190,7 @@ CmdLineArgs * parseArgs(int argc, char ** argv)
 	args->fillGaps = 1;
 	args->gapSize = 4;
 	args->winSize = 1;
-	args->GU = 0;
+	args->GU = 1;
 	strcpy(args->fileName, "default");
 	strcpy(args->rnaupOut, "default");
 
