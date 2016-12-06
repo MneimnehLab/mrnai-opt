@@ -338,7 +338,7 @@ void PRBDPCore::atStepH(int theIndex, int * indices)
     // To incorporate last~first interaction, let i go to <= totalLevels-1
     // j=i+1 if no wrap around, else j=0
     // for(i=0; i<=totalLevels-1; i++)
-    for(i=0; i<totalLevels-1; i++)
+    for(i=0; i<=totalLevels-1; i++)  // change here for wrap around / loop around
     {
         chosenCount++;
         

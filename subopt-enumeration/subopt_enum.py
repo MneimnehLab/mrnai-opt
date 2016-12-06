@@ -33,11 +33,14 @@ def readPartial(filename):
     try:
         with open(filename) as matrx:
             for line in matrx:
-                data = line.split()
+                data    = line.split()
                 indices = map(int, data[:-1])
-                score = float(data[-1])
+                score   = float(data[-1])
                 partialOpt[tuple(indices)] = score
-                mn = min(mn, score)
+                mn      = min(mn, score)
+
+        zeroIndex = tuple([0] * len(indices))
+        partialOpt[zeroIndex] = 0.0
         return partialOpt, mn
 
     except IOError:
@@ -52,7 +55,7 @@ def getBoundary(config, ns_plus_1):
 
     for (l,i,j,w1,w2) in config:
         smallest[l] = min(smallest[l], i-w1)
-        smallest[l+1] = min(smallest[l+1], j-w2)
+        smallest[(l+1)%len(ns_plus_1)] = min(smallest[(l+1)%len(ns_plus_1)], j-w2)
 
     return [smallest[l] for l in range(len(ns_plus_1))]
 
@@ -77,8 +80,6 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
     st = datetime.datetime.fromtimestamp(t1).strftime('%Y-%m-%d %H:%M:%S')
     print "Started at %s" % st
     
-    # allWindows = weights.keys()
-
     partialOpt, opt = readPartial(partMatrixFile)
     eps = -1*eps_frac * float(opt)
     upperBound = opt + eps
@@ -86,6 +87,7 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
     sys.stderr.write("eps frac =" + str(eps_frac) + "\n")
     sys.stderr.write("eps =" + str(eps) + "\n")
     sys.stderr.write("Finding structures in range " + str(opt) + " to " + str(upperBound) + "\n")
+    sys.stderr.write("Wrap around = " + str(loopAround) + "\n")
     
     
     setAllWindows = windows
@@ -95,26 +97,28 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
     ns_plus_1 = map(lambda x: x+1, ns)
     
     levels  = len(ns)
+    numRNAs = len(ns)
     
-    levelsEnum = list(range(levels-1))
-    if loopAround:
-        levelsEnum.append(0)
+    RNAs = list(range(len(ns)))
 
-    
-    #edgesInLevel = {}
+    if loopAround:
+        levelsEnum = list(range(levels))
+        RNAs.append(0)
+    else:
+        levelsEnum = list(range(levels-1))
+
     windowsInLevel = {}
-    for level in range(levels-1):
+    for level in levelsEnum:
         windowsInLevel[level] = []
     
-    '''    
-    for (l,i,j,w1,w2) in [(l,i,j,w1,w2) for l in range(levels-1) for i in range(1,(ns[l]+1)) for j in range(1,(ns[l+1]+1)) for w1 in range(1,26) for w2 in range(1,26) if i > w1 and j > w2]:
-        windowsInLevel[l].append((l,i,j,w1,w2))
-    '''
-    #for (l,i,j,w1,w2) in [(l,i,j,w1,w2) for l in range(levels-1) for i in range(1,(ns[l]+1)) for j in range(1,(ns[l+1]+1)) for w1 in range(1,26) for w2 in range(1,26) if i > w1 and j > w2]:
-    for l in range(levels-1):
+    # for l in range(levels-1):
+    for l in levelsEnum:
+        # print "l =", l
         #for i in range(1,(ns[l]+1)) for j in range(1,(ns[l+1]+1)) for w1 in range(1,26) for w2 in range(1,26) if i > w1 and j > w2]:
         #windowsInLevel[l].append((l,i,j,w1,w2))
         windowsInLevel[l].extend(   [(l_,i,j,w1,w2) for (l_,i,j,w1,w2) in allWindows if l_ == l]   )
+        if l == 3:
+            print [(l_,i,j,w1,w2) for (l_,i,j,w1,w2) in allWindows if l_ == l]
     
     
     
@@ -157,7 +161,7 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
                 # print (lA,iA,jA,w1A,w2A)
                 actualBoundary = [0] * levels
                 actualBoundary[l] = iA
-                actualBoundary[l+1] = jA
+                actualBoundary[(l+1) % numRNAs] = jA
 
                 # print actualBoundary
                 score = partialOpt[tuple(actualBoundary)] + weights[(lA,iA,jA,w1A,w2A)]
@@ -191,6 +195,10 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
     
     while len(stack) > 0:
         
+        # print '\n\n\n'
+        # print '------------------------------------------------'
+        # print '\n\n\n'
+        # print stack
         addedCount = 0
         stackLens.append(len(stack))
         
@@ -206,10 +214,13 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
         configBoundary = getBoundary(config, ns_plus_1)
         finalWins = getFirstInLevel(config, ns_plus_1)
         
+        # print 'curr config =', config
+        # print "configBoundary =", configBoundary
 
         # to find remaining windows, look at windows on this level to the left of the boundary of the config
-        for level in range(levels-1):
-            bi, bj = configBoundary[level:level+2]
+        for level in levelsEnum:
+            bi = configBoundary[RNAs[level]]
+            bj = configBoundary[RNAs[level+1]]
             
             if finalWins[level] is not None:
                 fl, fi, fj, fw1, fw2 = finalWins[level]
@@ -227,27 +238,34 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
             remainingWindows.extend(candidateWindows)
 
        
-        
+        # print 'all rem wins =', remainingWindows
         while len(remainingWindows) > 0:
             window = remainingWindows.pop()
         
             (l,i,j,w1,w2) = window
+
+            # print 'rem win =', window
             
             # check if it's the last terminal
             # i.e., there is no window win' below this such that both left pegs of win' touch the boundary
             
             isLastTerm = True
-            for level in range(l+2, levels-1):
+            # for level in range(l+2, levels-1):
+            for level in levelsEnum[l+2:]:
+                # print '**lev =', level
                 for win in config:
                     if win[0] == level:
-                        bi, bj = configBoundary[level:level+2]
+                        # bi, bj = configBoundary[level:level+2]
+                        bi = configBoundary[RNAs[level]]
+                        bj = configBoundary[RNAs[level+1]]
                         
                         if (win[1]-win[3], win[2]-win[4]) == (bi, bj):
                             isLastTerm = False
+                            # print 'win =', win, ' touches boundary'
                             break
                     
             if isLastTerm:
-                # print "for config", config, " ... ", win, "is last term"
+                # print "for config", config, " ... ", window, "is last term"
                 
                 '''
                 At this point we should check whether adding this edge is viable 
@@ -263,9 +281,20 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
                 boundaryWithThisWin = getBoundary(configWithWin, ns_plus_1)
                 leftOverBoundary = [min(x-1, y)  for (x,y) in zip(boundaryWithThisWin, ns)]
 
+
+                # print 'configWithWin =', configWithWin
+                # print 'leftOverBoundary =', leftOverBoundary
+                # print 'boundaryWithThisWin =', boundaryWithThisWin
+                # print 'totalWeight =', totalWeight
+                # print 'partialOpt[tuple(leftOverBoundary)] =', partialOpt[tuple(leftOverBoundary)]
+                # print 'weights[window] =', weights[window]
+
                 all = totalWeight + \
                         weights[window] + \
                         partialOpt[tuple(leftOverBoundary)]
+
+                # print 'all =', all
+                
                 
                 if all <= opt + eps:
                     # print "     ",
@@ -286,8 +315,8 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
                     finals2 = finals.copy()
                     finals2[l] = window
                     
-                    if l > 0: terminals2[l-1] = ()
-                    if l < levels-1: terminals2[l+1] = ()
+                    # if l > 0: terminals2[l-1] = ()
+                    # if l < levels-1: terminals2[l+1] = ()
                     
                     #push this new config, terminals on the stack
                     stack.append( (config2, terminals2, finals2) )
@@ -296,8 +325,11 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
                 else:
                     # print "no more good wins, so breaking"
                     pass
+            else:
+                # print 'not last term'
+                pass
                 
-
+            # print ''
             
             
         added.append(addedCount)
@@ -316,11 +348,12 @@ def findSubOptimalConfigs(weightsMatrix, windows, partMatrixFile, ns, eps_frac, 
     # print "#End Acceptable"
     
 
-    print "Ended at   %s" % st2
+    # print "Ended at   %s" % st2
+    # print " "
+
     
-    print " "
     timeElapsed = t2 - t1
-    print "Time elapsed = ", timeElapsed
+    sys.stderr.write("Time elapsed = ", str(timeElapsed),"\n")
     
 
 def main():
@@ -347,7 +380,12 @@ def main():
     # read window weights file
     
     maxSize = max(ns)+1
-    weightsMatrix = np.zeros((len(ns)-1, maxSize, maxSize, 26, 26), dtype=np.float32)
+
+    if args.loopAround == 1:
+        weightsMatrix = np.zeros((len(ns), maxSize, maxSize, 26, 26), dtype=np.float32)
+    else:
+        weightsMatrix = np.zeros((len(ns)-1, maxSize, maxSize, 26, 26), dtype=np.float32)
+
     windows = []
     
     
@@ -359,12 +397,9 @@ def main():
                 if len(line) == 0: break
                 
                 data = line.split()
-                #print line2
                 data[:5] = map(int, data[:5])
 
-                level = data[0]
-                i = data[2]
-                j = data[4]
+                level, i, j = data[0], data[2], data[4]
                 w1 = data[2] - data[1]
                 w2 = data[4] - data[3]
                 

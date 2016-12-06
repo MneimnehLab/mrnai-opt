@@ -12,7 +12,7 @@ def main():
 
 
     N = len(sequences) - 1  # len-1 if no wrap around
-    if '-w' in sys.stdin:
+    if '-w' in sys.argv:
         N = len(sequences)
         
     for level in range(N):
