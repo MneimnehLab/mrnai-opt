@@ -2,10 +2,10 @@ from collections import defaultdict
 
 def main():
     weights = defaultdict(float)
-    weights[(0,1,1)] = -1
+    weights[(0,2,2)] = -1
     weights[(1,3,3)] = -1
-    weights[(2,1,2)] = -1
-    weights[(3,1,1)] = -24
+    weights[(2,4,4)] = -1
+    weights[(3,5,1)] = -1
 
     H = defaultdict(float)
     n = 5

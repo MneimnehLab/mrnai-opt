@@ -44,11 +44,11 @@ or use (3, 14, 14, 13, 13) in the last
 
 
 Sbtrt              3' UUUAUCCUGACGCU------------CCACCGAACG 5'  
-                      ||||||    ||||            ||||||||||             
+.                     ||||||    ||||            ||||||||||             
 FW2                5' ||||||    ||||  GUCAACUCGUGGUGGCUUGC 3'    
-                      ||||||    ||||  ||||||||||                       
-FW1                3' ||||||    ||||  CAGUUGACCAUGGUCCAUUACAUGGUGCGG 5'
-                      ||||||    ||||            |||||         ||||||   
+.                     ||||||    ||||  ||||||||||                       
+FW1                3' ||||||    ||||  CAGUUGAGCAUGGUCCAUUACAUGGUGCGG 5'
+.                     ||||||    ||||            |||||         ||||||   
 RzA                5' AAAUAGAGAAGCGA------------ACCAG--AGAAACACACGCC 3'    
 
  
@@ -57,7 +57,7 @@ Sbtrt              3'  UUUAUCCUGACGCUCCACCGAACG 5'
                                      ||||||||||             
 FW2                5'      GUCAACUCGUGGUGGCUUGC 3'    
                            ||||||||||                       
-FW1                3'      CAGUUGACCAUGGUCCAUUACAUGGUGCGG 5'
+FW1                3'      CAGUUGAGCAUGGUCCAUUACAUGGUGCGG 5'
                                      |||||         ||||||   
 RzA                5'  AAAUAGAGAAGCGAACCAG--AGAAACACACGCC 3'    
                        ||||||    ||||

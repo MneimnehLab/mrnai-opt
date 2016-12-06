@@ -9,6 +9,7 @@
 #include <cstdarg>
 #include <limits>
 #include <cstddef>
+#include <fstream>
 #include "PRBDPCore.h"
 #include "rnaseq.h"
 #include "Window.h"
@@ -28,6 +29,11 @@ PRBDPCore::PRBDPCore(SingleRunConfig * data, int gapSize, int wType) : data(data
     iterCount = 0;
     H_arrayHits = 0;
     W_arrayHits = 0;
+
+    matrixStream.open("output/matrix");
+    if(!matrixStream.is_open())
+        throw runtime_error( "Cannot open matrix output file." );
+
     
 #if TEST_TO_FILE == 1
     testfp = fopen("testfp.txt", "w");
@@ -331,7 +337,8 @@ void PRBDPCore::atStepH(int theIndex, int * indices)
     // Second part: min_i min_w {H(r1, r2, ..., r_{i}-w, r_{i+1}-w, ..., r_k)}
     // To incorporate last~first interaction, let i go to <= totalLevels-1
     // j=i+1 if no wrap around, else j=0
-    for(i=0; i<=totalLevels-1; i++)
+    // for(i=0; i<=totalLevels-1; i++)
+    for(i=0; i<totalLevels-1; i++)
     {
         chosenCount++;
         
@@ -513,6 +520,9 @@ void PRBDPCore::atStepH(int theIndex, int * indices)
     H_arrayHits++;
 #endif
 
+    for(int ci=0; ci<totalLevels; ci++)
+        matrixStream << indices[ci] << "\t";
+    matrixStream << min << "\n";
 }
 
 
@@ -608,6 +618,7 @@ void PRBDPCore::backtrackNR(int * indices)
 
 PRBDPCore::~PRBDPCore()
 {
+    matrixStream.close();
     // cout << "Config: " << endl;
     // for(auto win : config)
     // {

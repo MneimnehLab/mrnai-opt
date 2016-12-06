@@ -6,10 +6,15 @@ def main():
     inp = sys.stdin.readlines()
     sequences = inp[0].strip().split("&")
     names = inp[1].strip().split("&")
+
+    # convert "a,b,c|d,e,f" to even = [a,b,c], odd = [d,e,f]
     even, odd = map(lambda x: map(int, x.split(",")), inp[2].strip().split("|"))
 
 
-    N = len(sequences)  # len-1 if no wrap around
+    N = len(sequences) - 1  # len-1 if no wrap around
+    if '-w' in sys.stdin:
+        N = len(sequences)
+        
     for level in range(N):
         # file formats are "default-EVEN_ODD_fpGfunc.out"
 
@@ -35,10 +40,8 @@ def main():
                     data[2:4] = a,b
 
                     # replace unpaired energies
-                    e,f = data[9:11]
-                    data[9:11] = f,e
-            
-
+                    data[9:11] = (data[9:11])[::-1]
+                    
                     print '%d\t%s' % (level, '\t'.join(data))
 
 

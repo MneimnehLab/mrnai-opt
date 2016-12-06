@@ -8,6 +8,7 @@
 #include <string>
 #include <float.h> 
 #include <cstdarg>
+#include <fstream>
 #include "rnaseq.h"
 #include "Window.h"
 #include "Config.h"
@@ -15,6 +16,8 @@
 
 class PRBDPCore
 {
+private:
+    ofstream matrixStream;
 public:
 
     long iterCount ;
