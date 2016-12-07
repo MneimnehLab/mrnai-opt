@@ -11,6 +11,9 @@ using std::string;
 using std::cout;
 using std::endl;
 
+
+// following two functions thanks to "iain"! http://stackoverflow.com/a/868894/554658
+
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
     char ** itr = std::find(begin, end, option);
@@ -107,6 +110,7 @@ CmdLineArgs * Parser::ParseArgs(int argc, char ** argv)
         cout << "                  [-gu  allow GU pairs (0=no or 1=yes)]" << endl;
         cout << "                  [-f   input file name]" << endl;
         cout << "                  [-r   rnaup out file name]" << endl;
+        cout << "                  [-nl   (no loop around)]" << endl;
 
         exit(1);
     }
@@ -130,6 +134,7 @@ CmdLineArgs * Parser::ParseArgs(int argc, char ** argv)
                     cout << "                  [-gu  allow GU pairs (0=no or 1=yes)]" << endl;
                     cout << "                  [-f   input file name]" << endl;
                     cout << "                  [-r   rnaup out file name]" << endl;
+                    cout << "                  [-nl ] (no loop around)]" << endl;
 
                     exit(1);
                 //parallel
@@ -177,7 +182,7 @@ CmdLineArgs * Parser::ParseArgs(int argc, char ** argv)
                     break;
 
                 case 'f':
-                    printf("here: %s \n", argv[i+1]);
+                    // printf("here: %s \n", argv[i+1]);
                     args->fileName = string(argv[i+1]);
                 
                 case 'r':
@@ -189,6 +194,11 @@ CmdLineArgs * Parser::ParseArgs(int argc, char ** argv)
             } 
     }
 
+    if(cmdOptionExists(argv, argv+argc, "-nl"))
+    {
+        args->loopAround = false;   
+    }
+
     cerr << "Using k " << args->k;
     cerr << "Using parallel =  " << args->parallel << endl;
     cerr << "using trials =  " << args->trials << endl;
@@ -196,6 +206,8 @@ CmdLineArgs * Parser::ParseArgs(int argc, char ** argv)
 
     return args;
 }
+
+
 
 
 

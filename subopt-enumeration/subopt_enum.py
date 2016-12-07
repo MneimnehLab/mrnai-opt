@@ -270,7 +270,7 @@ class SubpotEnum(object):
                     
                     if w1 != w2 or w1 == 0: continue
 
-                    deltaEnergy = float(data[7])
+                    deltaEnergy = float(data[5])
 
                     if deltaEnergy >= 0:
                         continue
@@ -281,7 +281,8 @@ class SubpotEnum(object):
     
         
         except IOError:
-            sys.stderr.write("\nIncorrect file path for energies! \nPlease supply correct path using -f\n")
+            errorMsgs("Incorrect file path for energies: " + weightsFilename + "!",\
+                        "Please supply correct path using -f")
             sys.exit(1)
 
         sys.stderr.write("Done.\n")

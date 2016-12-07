@@ -76,13 +76,40 @@ void Weights::ReadOneFile(int evenId, int oddId, int location)
     double ****rnaWins = Arrays::make4DTable<double>(evenSeq.length()+1, oddSeq.length()+1, 26, 26);
     
     std::stringstream fileNameStream("");
-    fileNameStream << dirPath << "default-" << evenId << "_" << oddId << ".weights";
+    fileNameStream << dirPath << "default-" << evenId << "_" << oddId << "_itemized.out";
 
     string fileName = fileNameStream.str();
     // sprintf(fileName, "../rnaup_weights/output/default-%d_%d.weights", evenId, oddId);
     
     // int count = 0;
-    std::FILE * file = fopen(fileName.c_str(), "rt");
+    // std::FILE * file = fopen(fileName.c_str(), "rt");
+
+    std::ifstream rnaupEnergies(fileName.c_str());
+
+    if(rnaupEnergies.good())
+    {
+        string line;
+
+        while(!rnaupEnergies.eof())
+        {
+            getline(rnaupEnergies, line);
+
+            // The line may have many values; however, we only care about the first 5
+            std::stringstream lineParser(line);
+            
+            int i1,j1,i2,j2;
+            double energy;
+            lineParser >> i1 >> j1 >> i2 >> j2 >> energy; 
+            int w1 = j1-i1;
+            int w2 = j2-i2;
+            rnaWins[j1][j2][w1][w2] = energy;
+        }
+
+        printf("Read file %s\n", fileName.c_str());
+        rnaupCollections[location] = rnaWins;
+        
+    }
+    /*
     if ( file != NULL )
     {
         char line [ 500 ]; 
@@ -106,6 +133,7 @@ void Weights::ReadOneFile(int evenId, int oddId, int location)
         printf("Read file %s\n", fileName.c_str());
         rnaupCollections[location] = rnaWins;
     }
+    */
     else
     {
         printf("File read error! Could not read file %s \n", fileName.c_str());

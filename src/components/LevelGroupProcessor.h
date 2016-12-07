@@ -19,9 +19,10 @@ private:
     Chain * chain;
     vector<vector<int> > allGroupings;
     Weights* weights;
+    bool loopAround;
 
 public:
-    LevelGroupProcessor(int k, Chain*, Weights*);
+    LevelGroupProcessor(int k, Chain*, Weights*, bool loopAround);
 
     vector<pair<int,int>> prepareWithSubsets(int groupingNum, Config&);
     vector<vector<int>> GetAllGroupings();

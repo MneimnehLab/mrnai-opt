@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     if(args->k > chain.getBBHeight())
         args->k = chain.getBBHeight();
-    LevelGroupProcessor lgProc(args->k, &chain, &weights);
+    LevelGroupProcessor lgProc(args->k, &chain, &weights, args->loopAround);
     
     vector<vector<int> > x = lgProc.GetAllGroupings();
 

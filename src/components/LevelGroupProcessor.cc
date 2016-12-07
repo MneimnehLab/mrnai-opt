@@ -16,8 +16,8 @@
 using namespace std;
 
 
-LevelGroupProcessor::LevelGroupProcessor(int k_, Chain* chain_, Weights* weights_) :
-        k(k_), chain(chain_), weights(weights_) { }
+LevelGroupProcessor::LevelGroupProcessor(int k_, Chain* chain_, Weights* weights_, bool loopAround) :
+        k(k_), chain(chain_), weights(weights_), loopAround(loopAround) { }
 
 vector<vector<int> > LevelGroupProcessor::GetAllGroupings()
 {
@@ -116,7 +116,7 @@ vector<pair<int,int>> LevelGroupProcessor::prepareWithSubsets(int groupingNum, C
         TempCompression tc;
         tc.doCompression(data, data->numOfRNA);
 
-        PRBDPCore algo(data, 0, 1);
+        PRBDPCore algo(data, 0, 1, loopAround);
         Config config = algo.config;
         // cout << "Config: " << endl;
         for(auto win : config)

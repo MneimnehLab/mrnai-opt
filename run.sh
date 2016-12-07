@@ -9,5 +9,5 @@ if [ "$#" -lt 1 ]; then
 fi
 
 head -n 3 $INPUT_FILE | rnaup_weights/weights_rnaup -gu 1
-build/findone -k 4 -gs 4 -gu 1 < $INPUT_FILE
-head -n 3 $INPUT_FILE | ./compile_fpg.py > y_f2
+build/findone -k 4 -gs 0 -gu 1  < $INPUT_FILE
+head -n 3 $INPUT_FILE | ./compile_weights.py -w > compiled_weights.out

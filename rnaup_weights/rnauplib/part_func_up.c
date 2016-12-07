@@ -913,24 +913,24 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
     //fpNew = fopen("output\\test_wins_again.txt", "w");
 
     char fileName2[50];
-    sprintf(fileName2, "output/%s_fpGfunc.out", rnaupOut, n1, n2);
+    sprintf(fileName2, "output/%s_itemized.out", rnaupOut, n1, n2);
 
     FILE *fpGfunc;
     fpGfunc = fopen(fileName2, "w");
 
 
 
-    char fileName3[50];
-    sprintf(fileName3, "output/%s_energies.out", rnaupOut, n1, n2);
+    // char fileName3[50];
+    // sprintf(fileName3, "output/%s_energies.out", rnaupOut, n1, n2);
 
-    FILE *fpEnergy;
-    fpEnergy = fopen(fileName3, "w");
+    // FILE *fpEnergy;
+    // fpEnergy = fopen(fileName3, "w");
 
-    char weightsFileName[50];
-    sprintf(weightsFileName, "output/%s.weights", rnaupOut);
+    // char weightsFileName[50];
+    // sprintf(weightsFileName, "output/%s.weights", rnaupOut);
 
-    FILE *fpWeights;
-    fpWeights = fopen(weightsFileName, "w");
+    // FILE *fpWeights;
+    // fpWeights = fopen(weightsFileName, "w");
 
 
 
@@ -1432,14 +1432,17 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
                     double myE1 = -RT * log(myP1);
                     double myE2 = -RT * log(myP2);
                     fprintf(fpGfunc, "%d\t%d\t%d\t%d\t", k , i , revL , revJ );
-                    fprintf(fpGfunc, "%f\t%f\t%f\t", myval, g_minus_gint, G_is);
-                    fprintf(fpGfunc, "%f\t%f\t%f\t%f\t", myP1, myP2, myE1, myE2);
-                    fprintf(fpGfunc, "%f\t%f\t%e\t%e\t%f\t%d\n", Ev, g_minus_gint + Ev, scalew, intt, log(intt));
+                    fprintf(fpGfunc, "%f\t%f\t%f\t", G_is, g_minus_gint, myval);
+
+                    // fprintf(fpGfunc, "%f\t%f\t%f\t%f\t", myP1, myP2, myE1, myE2);
+                    fprintf(fpGfunc, "%f\t%f\t", myE1, myE2);
+                    // fprintf(fpGfunc, "%f\t%f\t%e\t%e\t%f\t%d\n", Ev, g_minus_gint + Ev, scalew, intt, log(intt));
                     // fflush(fpGfunc);
 
+                    fprintf(fpGfunc, "\n");
 
-                    fprintf(fpWeights, "%d\t%d\t%d\t%d\t", k , i , revL , revJ ); 
-                    fprintf(fpWeights, "%f\n", G_is);
+                    // fprintf(fpWeights, "%d\t%d\t%d\t%d\t", k , i , revL , revJ ); 
+                    // fprintf(fpWeights, "%f\n", G_is);
 
                     /*
                     tt   = qint_4[i][j][a][b] * scalew*rev_d * p_c_S[add_i5][add_i3] * p_c2_S[j][b];
@@ -1529,7 +1532,7 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
                         //backTrackEnergy(k, l, i, j, backtrackMaxEnergyMtrx, 0, n2);
                         //printf("\n");
 
-                        fprintf(fpEnergy, "%d\t%d\t%d\t%d\t%f     \n", k, i, revL_, revJ_, Ev);
+                        // fprintf(fpEnergy, "%d\t%d\t%d\t%d\t%f     \n", k, i, revL_, revJ_, Ev);
 
                     }
                 }
@@ -1541,8 +1544,8 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
 
     //fclose(fp);
     fclose(fpGfunc);
-    fclose(fpEnergy);
-    fclose(fpWeights);
+    // fclose(fpEnergy);
+    // fclose(fpWeights);
     
 
 

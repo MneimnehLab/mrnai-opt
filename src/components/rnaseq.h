@@ -32,6 +32,7 @@ typedef struct CmdLineArgs
     int  GU;
     string rnaupOut;
     string fileName;
+    bool loopAround;
 
     CmdLineArgs() 
     {
@@ -45,6 +46,7 @@ typedef struct CmdLineArgs
         GU = 0;
         fileName = "default";
         rnaupOut = "default";
+        loopAround = true;
     };
 } CmdLineArgs;
 

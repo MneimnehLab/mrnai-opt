@@ -26,6 +26,8 @@ public:
     long wType;
     FILE * testfp;
 
+    bool wrapAround;
+
     void backtrackNR(int * indices);
     void deallocAll();
     void reverse(char * source, char * dest);
@@ -68,7 +70,7 @@ public:
 
     /// New functions
 
-    PRBDPCore(SingleRunConfig * , int gapSize, int wType);
+    PRBDPCore(SingleRunConfig * , int gapSize, int wType, bool wrapAround);
     ~PRBDPCore();
     void initMetaTrees(int num);
     void initLinear(int num);

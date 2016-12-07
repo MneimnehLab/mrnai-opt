@@ -1,3 +1,7 @@
+// Originally written in C, with a major rewrite in C++, 
+// with a lot of the old C code still thrown around.
+// Sorry ^_^  !
+
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -23,14 +27,15 @@ using namespace std;
 #define TEST_TO_FILE 0
 
 
-PRBDPCore::PRBDPCore(SingleRunConfig * data, int gapSize, int wType) : data(data), wType(wType)
+PRBDPCore::PRBDPCore(SingleRunConfig * data, int gapSize, int wType, bool wrapAround) 
+    : data(data), wType(wType), wrapAround(wrapAround)
 {
 
     iterCount = 0;
     H_arrayHits = 0;
     W_arrayHits = 0;
 
-    matrixStream.open("output/matrix");
+    matrixStream.open("output/partial_matrix.out");
     if(!matrixStream.is_open())
         throw runtime_error( "Cannot open matrix output file." );
 
@@ -338,7 +343,9 @@ void PRBDPCore::atStepH(int theIndex, int * indices)
     // To incorporate last~first interaction, let i go to <= totalLevels-1
     // j=i+1 if no wrap around, else j=0
     // for(i=0; i<=totalLevels-1; i++)
-    for(i=0; i<=totalLevels-1; i++)  // change here for wrap around / loop around
+
+    int itersForLoop = wrapAround && totalLevels != 2 ? totalLevels : totalLevels-1;
+    for(i=0; i<itersForLoop; i++)  // change here for wrap around / loop around
     {
         chosenCount++;
         
