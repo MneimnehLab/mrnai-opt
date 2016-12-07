@@ -23,7 +23,7 @@ class SubpotEnum(object):
         self.energies_file  = energies_file
         self.loopAround     = loopAround
         self.ns             = [len(seq) for seq in self.sequences]
-        self.partMatrixFil  = partMatrixFile
+        self.partMatrixFile = partMatrixFile
         self.eps_frac       = eps_frac
         self.oneSidedGap    = oneSidedGap
         self.gapSize        = gapSize
@@ -33,11 +33,14 @@ class SubpotEnum(object):
         self.numRNAs        = len(self.ns)        
         self.RNAs           = list(range(len(self.ns)))
 
-        self.stack          = []
-        self.acceptableConfigs = []
-        
-        
+        if loopAround:
+            self.levelsEnum = list(range(self.levels))
+            self.RNAs.append(0)
+        else:
+            self.levelsEnum = list(range(self.levels-1))
 
+        self.stack             = []
+        self.acceptableConfigs = []
 
         # read all data files
         self.readEnergies()
@@ -137,20 +140,6 @@ class SubpotEnum(object):
         
         allWindows = self.windows
         
-        if self.loopAround:
-            self.levelsEnum = list(range(self.levels))
-            self.RNAs.append(0)
-        else:
-            self.levelsEnum = list(range(self.levels-1))
-
-        self.windowsInLevel = {}
-        for level in self.levelsEnum:
-            self.windowsInLevel[level] = []
-        
-        for l in self.levelsEnum:
-            self.windowsInLevel[l].extend(   [(l_,i,j,w1,w2) for (l_,i,j,w1,w2) in allWindows if l_ == l]   )
-            
-    
         # nextWins = preprocessWindows(weightsMatrix, allWindows, partialOpt, numRNAs)
         
         weights = self.weightsMatrix
@@ -184,8 +173,7 @@ class SubpotEnum(object):
                     boundaryWithThisWin = self.getBoundary(configWithWin)
                     leftOverBoundary = [min(x-1, y)  for (x,y) in zip(boundaryWithThisWin, self.ns)]
 
-                    bestPossible = totalWeight + \
-                            weights[window] + \
+                    bestPossible = totalWeight + weights[window] + \
                             self.partialOpt[tuple(leftOverBoundary)]
 
                     if bestPossible <= self.opt + self.eps:
@@ -263,6 +251,8 @@ class SubpotEnum(object):
         nums = len(ns) if self.loopAround else len(ns)-1
         self.weightsMatrix = np.zeros((nums, maxSize, maxSize, 26, 26), dtype=np.float32)
         self.windows = []
+        self.windowsInLevel = defaultdict(list)
+    
 
         sys.stderr.write("Reading energies... ")
         weightsFilename = self.energies_file
@@ -287,14 +277,14 @@ class SubpotEnum(object):
 
                     self.weightsMatrix[(level, i, j, w1, w2)] = deltaEnergy
                     self.windows.append((level, i, j, w1, w2))
+                    self.windowsInLevel[level].append((level, i, j, w1, w2))
+    
         
         except IOError:
             sys.stderr.write("\nIncorrect file path for energies! \nPlease supply correct path using -f\n")
             sys.exit(1)
 
         sys.stderr.write("Done.\n")
-
-        # return weightsMatrix, windows
 
 
 def main():
@@ -307,20 +297,18 @@ def main():
     parser.add_argument('-l', '--loop-around', dest='loopAround', default=1, type=int)
     args = parser.parse_args()
 
-    inp = raw_input("")
-    sequences = inp.strip().split("&")
-    energies_file = args.energies_file     
-    loopAround = args.loopAround == 1   
-    partMatrixFile = args.matrix
-    eps_frac = args.eps
+    inp         = raw_input("")
+    sequences   = inp.strip().split("&")
+    loopAround  = args.loopAround == 1   
+    eps_frac    = args.eps
     oneSidedGap = args.oneSidedGap
-    gapSize = 1
+    gapSize     = 1
+    energies_file  = args.energies_file     
+    partMatrixFile = args.matrix
+    
+    
 
     subopt = SubpotEnum(sequences, energies_file, loopAround, partMatrixFile, eps_frac, oneSidedGap, gapSize)
-
-
-    
-    
 
 if __name__ == "__main__":
     main()
