@@ -27,5 +27,8 @@ The script `./run_convg` can be used with the same arguments to heuristically co
 To take a brute force approach, generate structures for all permuations of RNAs. Use the script `./run_allperms.sh`.
 
 ### subopt-enumeration
-
-The program to generate 
+The program to generate all suboptimal solutions lying within the range [OPT, OPT(1+epsilon)] is also available in this package. As mentioned above, this program needs to the partial dynamic programming matrix in order to run. To run everything from scratch with `epsilon = 0.01`, use
+```
+./run_subopt.sh inputs/yeast_trunc 0.01
+```
+This will write all suboptimal structures and their energies to a file `subopt_structs.out`. If you already have the partial matrix, or prefer writing to another file, run the file `subopt-enumeration/subopt_enum.py` using the corresponding flags. Note that `subopt_enum.py` needs `&`-separated sequences from stdin.
