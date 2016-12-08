@@ -3,7 +3,7 @@ Dynamic programming algorithm to predict the optimal structure of multiple inter
 
 To install, goto ```mrnai-opt```, and write ```make all```
 
-To run any program, you have to provide sequence information (sequences, their names, and their parity) in a file. All sequences should be provided in 5'->3'. For example, suppose the file ```yeast_trunc``` contains
+To run any program, you have to provide sequence information (sequences, their names, and their parity) to stdin. Since this will be needed for multiple programs, we recommend saving it in a file and piping it. All sequences should be provided in 5'->3'. For example, suppose the file ```yeast_trunc``` contains
 ```
 NNNNGUAUGUNNNN&NNNNACAGAGAUGAUCAGCNNNN&NNNNGCUUAGAUCAAGUGUAGUANNNN&NNNNUACUAACACCNNNN
 I1&U6&U2&I2
