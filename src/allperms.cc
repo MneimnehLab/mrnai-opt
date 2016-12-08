@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         if(k > chain.getBBHeight())
             k = chain.getBBHeight();
         
-        LevelGroupProcessor lgProc(k, &chain, &weights);
+        LevelGroupProcessor lgProc(k, &chain, &weights, args->loopAround);
         
         vector<vector<int> > x = lgProc.GetAllGroupings();
         for(int groupNum=0; groupNum<x.size(); groupNum++)

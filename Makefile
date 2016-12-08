@@ -18,6 +18,7 @@ ALL_OBJ+= $(BUILD_DIR)/components/Window.o $(BUILD_DIR)/components/Config.o
 
 PROG_NAME=findone
 ALL_PERMS_PROG=allperms
+CONVG_PROG=converge
 
 $(BUILD_DIR)/%.o : $(SOURCE_DIR)/%.cc
 	@mkdir -p $(BUILD_DIR)
@@ -31,9 +32,13 @@ $(PROG_NAME): $(ALL_OBJ) $(BUILD_DIR)/findone.o
 $(ALL_PERMS_PROG): $(ALL_OBJ) $(BUILD_DIR)/allperms.o
 	$(CC) $(C++FLAGS) -o  $(BUILD_DIR)/$@ $(ALL_OBJ) $(BUILD_DIR)/allperms.o
 
+$(CONVG_PROG): $(ALL_OBJ) $(BUILD_DIR)/convg.o
+	$(CC) $(C++FLAGS) -o  $(BUILD_DIR)/$@ $(ALL_OBJ) $(BUILD_DIR)/convg.o
+
 all:
 	make $(PROG_NAME)
 	make $(ALL_PERMS_PROG)
+	make $(CONVG_PROG)
 	cd rnaup_weights/ && make
 	
 	

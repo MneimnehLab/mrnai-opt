@@ -31,6 +31,10 @@ vector<vector<int> > LevelGroupProcessor::GetAllGroupings()
     // Variable "first" = num of levels in first group
     for(int first=k;first>=1;first--)
     {
+        // cout << "\n\n\nfirst =" << first << endl;
+        // cout << "k = " << k << endl;
+        // cout << endl << endl;
+        
 
         // levelsPerGroup = {a1, a2, ..., an} where ai = num of levels in group i
         vector<int> levelsPerGroup;
@@ -52,12 +56,15 @@ vector<vector<int> > LevelGroupProcessor::GetAllGroupings()
 
         allGroupings.push_back(levelsPerGroup);
 
-        cout << "+++++++++++++++++++++++\n" << endl
-             << "Size of First Window = "<< first << endl;
-        cout << "Set of Subset: " << Arrays::vecToStr(levelsPerGroup) << endl;
+        // cout << "+++++++++++++++++++++++\n" << endl
+        //      << "Size of First Window = "<< first << endl;
+        // cout << "Set of Subset: " << Arrays::vecToStr(levelsPerGroup) << endl;
 
         if(k == levels) 
+        {
+            // cout << "\n\n\nwill break\n\n\n";
             break;
+        }
     }
 
     return allGroupings;
@@ -136,3 +143,24 @@ vector<pair<int,int>> LevelGroupProcessor::prepareWithSubsets(int groupingNum, C
     return toFromPairs;
 
 }
+
+Config LevelGroupProcessor::findMinEnergyStructure()
+{
+    double minEnergy = 0;
+    Config minConfig;
+
+    vector<vector<int> > x = GetAllGroupings();
+    for(int groupNum=0; groupNum<x.size(); groupNum++)
+    {
+        Config c;
+        prepareWithSubsets(groupNum, c);
+        if(minEnergy > c.totalWeight())
+        {
+            minEnergy = c.totalWeight();
+            minConfig = c;
+        }
+    }
+
+    return minConfig;
+}
+

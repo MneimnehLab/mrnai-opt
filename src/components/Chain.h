@@ -51,6 +51,7 @@ public:
     static Pointer * createEmptyStructure();
     static Pointer * makeSomeBinStruct(vector<OrigRNASeq> * origRNASequences, int numOfRNA);
     static Chain makeGivenChain(vector<OrigRNASeq> * origRNASequences, vector<int> sequence);
+    static Chain makeRandomChain(vector<OrigRNASeq> * origRNASequences);
     // 
     // static Chain makeRandomBinStruct(OrigRNASeq ** origRNASequences, int numOfRNA);
 

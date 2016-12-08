@@ -23,6 +23,7 @@ unsigned long long rdtsc(){
 
 Chain::Chain(Pointer * h, vector<OrigRNASeq> * origRNASequences_) : head(h), origRNASequences(origRNASequences_)
 {
+    //throw std::runtime_error( "Constructor Chain(Pointer * h, vector<OrigRNASeq> * origRNASequences_) is not supported!" );
 }   
 
 Chain::Chain(vector<OrigRNASeq> * origRNASequences_, int numOfRNA) : 
@@ -65,6 +66,30 @@ Chain::Pointer * Chain::makeSomeBinStruct(vector<OrigRNASeq> * origRNASequences,
     }
     
     return head;
+}
+
+Chain Chain::makeRandomChain(vector<OrigRNASeq> * origRNASequences)
+{
+    vector<int> v;
+    for(int i=0; i< origRNASequences->size(); i++)
+        v.push_back(i);
+
+    // shuffle
+    int N = v.size();
+    for(int i=0; i<N; i++)
+    {
+        int randPos = rand() % N;
+        int temp = v[i];
+        v[i] = v[randPos];
+        v[randPos] = temp;
+    }
+
+    // cout << "Random chain:" << endl;
+    // for(auto e : v)
+    //     cout << e << " ";
+    // cout << endl;
+
+    return Chain::makeGivenChain(origRNASequences, v);
 }
 
 Chain Chain::makeGivenChain(vector<OrigRNASeq> * origRNASequences, vector<int> sequence)
@@ -137,12 +162,12 @@ void Chain::flipSubChain(int start, int end)
         if(i == start)
         {
             startEOB = n;
-            printf("Start id = %d \n", startEOB->origId);
+            // printf("Start id = %d \n", startEOB->origId);
         }   
         else if(i == end)
         {
             endEOB = n;
-            printf("End id = %d \n", endEOB->origId);
+            // printf("End id = %d \n", endEOB->origId);
         }
         
         if(i >= start && i <= end)
@@ -175,7 +200,7 @@ void Chain::flipSubChain(int start, int end)
         prevToStart->next = endEOB;
     
     
-    printf("reversed... \n");
+    // printf("reversed... \n");
 }
 
 void Chain::printChain()

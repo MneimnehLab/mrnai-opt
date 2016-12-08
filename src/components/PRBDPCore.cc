@@ -344,7 +344,8 @@ void PRBDPCore::atStepH(int theIndex, int * indices)
     // j=i+1 if no wrap around, else j=0
     // for(i=0; i<=totalLevels-1; i++)
 
-    int itersForLoop = wrapAround && totalLevels != 2 ? totalLevels : totalLevels-1;
+    int itersForLoop = wrapAround && totalLevels != 2 && totalLevels % 2 == 0 ? 
+                            totalLevels : totalLevels-1;
     for(i=0; i<itersForLoop; i++)  // change here for wrap around / loop around
     {
         chosenCount++;

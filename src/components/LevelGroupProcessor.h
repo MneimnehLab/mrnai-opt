@@ -26,6 +26,7 @@ public:
 
     vector<pair<int,int>> prepareWithSubsets(int groupingNum, Config&);
     vector<vector<int>> GetAllGroupings();
+    Config findMinEnergyStructure();
 };
 
 #endif

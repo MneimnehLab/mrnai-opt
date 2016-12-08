@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
 
     for(int groupNum=0; groupNum<x.size(); groupNum++)
     {
+        cout << "Computing Opt for Grouping " << (groupNum+1) 
+             << "/" << x.size() << endl
+             << "------------------------------------" << endl;
+        // cout << "\n\n\nin group " << groupNum << endl << endl;
         Config c;
         lgProc.prepareWithSubsets(groupNum, c);
         if(minEnergy > c.totalWeight())
@@ -52,6 +56,10 @@ int main(int argc, char *argv[])
             minEnergy = c.totalWeight();
             minConfig = c;
         }
+
+        // cout << "\n\n\ndone with group " << groupNum << endl << endl;
+
+        cout << endl << endl;
     }
 
     cout << endl
