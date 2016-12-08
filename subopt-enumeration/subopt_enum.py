@@ -8,6 +8,7 @@ import datetime
 import sys
 import argparse
 from collections import defaultdict
+from container import Container
 
 
 INFINITY = sys.maxint
@@ -15,7 +16,6 @@ INFINITY = sys.maxint
 def errorMsgs(*args):
     for msg in args:
         sys.stderr.write("ERROR: " + msg + "\n")
-
 
 class SubpotEnum(object):
     def __init__(self, sequences, energies_file, loopAround, partMatrixFile, eps_frac, oneSidedGap, gapSize):
@@ -40,7 +40,7 @@ class SubpotEnum(object):
             self.levelsEnum = list(range(self.levels-1))
 
         self.stack             = []
-        self.acceptableConfigs = []
+        self.acceptableConfigs = Container('heap')
 
         # read all data files
         self.readEnergies()
@@ -151,7 +151,8 @@ class SubpotEnum(object):
 
             totalWeight = sum(weights[window_] for window_ in config)    
             if totalWeight <= self.opt + self.eps:
-                self.acceptableConfigs.append((config, totalWeight))
+                # self.acceptableConfigs.append((config, totalWeight))
+                self.acceptableConfigs.add((totalWeight, config))
                 
             configBoundary = self.getBoundary(config)
             remainingWindows = self.getRemainingWindows(config, configBoundary)
@@ -185,14 +186,8 @@ class SubpotEnum(object):
                         # should we terminate search here?
                         pass
         
-        self.acceptableConfigs.sort(key=lambda x:x[1], reverse=False)
-        
-        print "\n\n#Acceptable configs = "
-        for config,weight in self.acceptableConfigs:
-            print config, "\t",weight
-
         timeElapsed = time.time() - t1
-        sys.stderr.write("Time elapsed = " + str(timeElapsed) + "\n")
+        sys.stderr.write("Time to generate structures: " + str(timeElapsed) + "\n")
     
     def initStackWithWins(self):
         for window in self.windows:
@@ -289,13 +284,15 @@ class SubpotEnum(object):
 
 
 def main():
-    
+
+    sys.stderr.write("\n\nSuboptimal Enumeration\n------------------\n\n")
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--partial-matrix', dest='matrix', default='partial_matrix')
     parser.add_argument('-f', '--energies-file', dest='energies_file', default='energies')
     parser.add_argument('-e', '--epsilon', dest='eps', default=0.25, type=float)
     parser.add_argument('-g', '--gap-sides', dest='oneSidedGap', default=1, type=int)
     parser.add_argument('-l', '--loop-around', dest='loopAround', default=1, type=int)
+    parser.add_argument('-o', '--output-file', dest='outputFile', default="subopt_structs.out")
     args = parser.parse_args()
 
     inp         = raw_input("")
@@ -310,6 +307,15 @@ def main():
     
 
     subopt = SubpotEnum(sequences, energies_file, loopAround, partMatrixFile, eps_frac, oneSidedGap, gapSize)
+
+    # print "\n\n#Acceptable configs = "
+    with open(args.outputFile, "w") as output:
+        for n, (weight,config) in enumerate(subopt.acceptableConfigs):
+            s = "%s\t%s\t%s\n" % (n+1, config, weight)
+            output.write(s) 
+
+    sys.stderr.write("Output written to " + args.outputFile + "\n\n")
+
 
 if __name__ == "__main__":
     main()
