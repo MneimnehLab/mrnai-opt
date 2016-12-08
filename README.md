@@ -3,7 +3,7 @@ Dynamic programming algorithm to predict the optimal structure of multiple inter
 
 To install, goto ```mrnai-opt```, and write ```make all```
 
-To run any program, you have to provide sequence information (sequences, their names, and their parity) to stdin. Since this will be needed for multiple programs, we recommend saving it in a file and piping it. All sequences should be provided in 5'->3'. For example, suppose the file ```yeast_trunc``` contains
+To run any program, you have to provide sequence information (sequences, their names, and their parity) to stdin. Since this will be needed for multiple programs, we recommend saving it in a file. All sequences should be provided in 5'->3'. For example, suppose the file ```yeast_trunc``` contains
 ```
 NNNNGUAUGUNNNN&NNNNACAGAGAUGAUCAGCNNNN&NNNNGCUUAGAUCAAGUGUAGUANNNN&NNNNUACUAACACCNNNN
 I1&U6&U2&I2
@@ -12,7 +12,7 @@ I1&U6&U2&I2
 in the first three lines. The first line contains all sequences, separated by ```&```. The second line has their names. The third line contains all even sequences' numbers followed by a `|`, followed by all odd sequences' numbers.
 Your file can contain other metadata as long as the first three lines are in this format. 
 
-Note that RNAs are layered in the order specified in line 1. To find the optimal structure, run
+Note that RNAs are layered in the order specified in line 1. To find the optimal structure from scratch, run
 ```
 ./run.sh inputs/yeast_trunc
 ```
