@@ -16,7 +16,7 @@ Note that RNAs are layered in the order specified in line 1. To find the optimal
 ```
 ./run.sh inputs/yeast_trunc
 ```
-assuming `yeast_trunc` is in the folder `inputs`. Results are written to stdout.
+assuming `yeast_trunc` is in the folder `inputs`. Results are written to stdout. The core program that is run here is `findone`. To see the full list of arguments that can be passed, execute `build/findone -h`.
 
 Running this script generates several output files in the folder `output`. Most of them are intermediary files that contain output from RNAup, and have names such as `default-X_Y_itemized.out`, where `X` is an even RNA and `Y` is an odd RNA. A file `partial_matrix.out` will be created by the DP algorithm's program. This file contains the dynamic programming matrix, W(i_1, i_2, ..., i_m) for all indices. This file is needed by the suboptimal-enumeration algorithm's implementation. Finally, a file `compiled_weights.out` will be created, which contains data from all `default-X_Y_itemized.out` files, taking care of orientation information where necessary. This can be used with sampling programs.
 
