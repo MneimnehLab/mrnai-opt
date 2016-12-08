@@ -20,12 +20,12 @@ assuming `yeast_trunc` is in the folder `inputs`. Results are written to stdout.
 
 Running this script generates several output files. Most of them are intermediary files that contain output from RNAup, and have names such as `default-X_Y_itemized.out`, where `X` is an even RNA and `Y` is an odd RNA. A file `partial_matrix.out` will be created by the DP algorithm's program. This file contains the dynamic programming matrix, W(i_1, i_2, ..., i_m) for all indices. This file is needed by the suboptimal-enumeration algorithm's implementation. Finally, a file `compiled_weights.out` will be created, which contains data from all `default-X_Y_itemized.out` files, taking care of orientation information where necessary. This can be used with sampling programs.
 
-# Heuristically Converging to a Permutation
+### Heuristically Converging to a Permutation
 The script `./run_convg` can be used with the same arguments to heuristically converge to an optimal ordering of RNAs. The initial ordering doesn't matter, since the program randomizes the seed every configuration time it is run.
 
-# All Permutations
+### All Permutations
 To take a brute force approach, generate structures for all permuations of RNAs. Use the script `./run_allperms.sh`.
 
-# subopt-enumeration
+### subopt-enumeration
 
 The program to generate 
