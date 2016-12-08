@@ -1,6 +1,3 @@
-![alt text](http://www.cs.hunter.cuny.edu/~saad/research/rubberbands_.jpg "Logo")
-
-
 # mrnai-opt
 Dynamic programming algorithm to predict the optimal structure of multiple interacting RNA strands.
 
