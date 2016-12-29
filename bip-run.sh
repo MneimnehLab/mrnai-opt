@@ -9,5 +9,4 @@ if [ "$#" -lt 1 ]; then
 fi
 
 head -n 3 $INPUT_FILE | rnaup_weights/weights_rnaup -gu 1
-build/findone -k 4 -gs 0  < $INPUT_FILE
-head -n 3 $INPUT_FILE | ./compile_weights.py > output/compiled_weights.out
+build-bipartite/complete -k 4 -gs 0  < $INPUT_FILE
