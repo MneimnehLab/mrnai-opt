@@ -2,3 +2,4 @@ build/
 **/.DS_Store
 *.out
 *.pyc
+.DS_Store
