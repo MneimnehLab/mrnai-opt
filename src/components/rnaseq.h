@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-using namespace std;
+// using namespace std;
 
 #define MAX_RNA_SIZE 250
 #define MAX_NUM_RNA 10
@@ -12,7 +12,7 @@ using namespace std;
 typedef struct OrigRNASeq
 {
     int origId;
-    string string;
+    std::string string;
     int originalLength;
     std::string name;
     int type;
@@ -30,8 +30,8 @@ typedef struct CmdLineArgs
     int  gapSize;
     int  winSize;
     int  GU;
-    string rnaupOut;
-    string fileName;
+    std::string rnaupOut;
+    std::string fileName;
     bool loopAround;
 
     CmdLineArgs() 
@@ -60,7 +60,7 @@ typedef struct RNASeq
     
     int * compressedRNA;
     int * expandedRNAmap;
-    vector<int> interactsWith;
+    std::vector<int> interactsWith;
     
     //int * parentOf[10];
     
@@ -85,7 +85,7 @@ typedef struct InteractWeight
 typedef struct SingleRunConfig
 {
     int numOfRNA;
-    vector<string> strArray1;
+    std::vector<std::string> strArray1;
     int setup[MAX_NUM_RNA][MAX_NUM_RNA];
     int parentOf[MAX_NUM_RNA][MAX_NUM_RNA];
     int interLocs[MAX_NUM_RNA][MAX_NUM_RNA];
@@ -98,7 +98,7 @@ typedef struct SingleRunConfig
     std::string stringRep;
     int gapSize;
 
-    vector<RNASeq *> rnaSequences;
+    std::vector<RNASeq *> rnaSequences;
 
 } SingleRunConfig;
 
