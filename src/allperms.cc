@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     double minEnergy = 0;
     Config minConfig;
 
-    for(auto permutation : allPerms)
+    for(const auto& permutation : allPerms)
     {
         int k = args->k;
 

@@ -7,19 +7,11 @@
 #include "rnaseq.h"
 using namespace std;
 
-
 unsigned long long rdtsc(){
     unsigned int lo,hi;
     __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
     return ((unsigned long long)hi << 32) | lo;
 }
-
-
-
-// Chain::Chain()
-// {
-//  head = createEmptyStructure();
-// }
 
 Chain::Chain(Pointer * h, vector<OrigRNASeq> * origRNASequences_) : head(h), origRNASequences(origRNASequences_)
 {
@@ -470,69 +462,3 @@ void Chain::printFlatStruct()
     }
     std::cout << std::endl;
 }
-
-
-
-
-// Pointer * Chain::makeRandomBinStruct(OrigRNASeq ** origRNASequences, int numOfRNA)
-// Chain Chain::makeRandomBinStruct(OrigRNASeq ** origRNASequences, int numOfRNA)
-// {
-
-    // //srand(time(NULL));
-    // srand(rdtsc());
-    // int array[MAX_NUM_RNA];
-    // int i;
-    
-    // for(i=0;i<numOfRNA;i++)
-    // {
-    //  array[i] = origRNASequences[i]->origId;
-    // }
-    // //now randomize it
-    // for(i=0;i<numOfRNA;i++)
-    // {
-    //  //select index 2
-    //  int r1 = rand() % numOfRNA; //0,1,2,..,n-1
-
-    //  int temp = array[i];
-    //  array[i] = array[r1];
-    //  array[r1] = temp;
-    // }
-    
-    
-    // Pointer * head = createEmptyStructure();
-    
-    // EOB * n = (EOB*) malloc(sizeof(EOB));
-    // n->next = NULL;
-    // n->origId = origRNASequences[array[0]]->origId;
-    // //printf("n->origId = %d \n", n->origId);
-    // n->type = origRNASequences[array[0]]->type;
-        
-    // head->elem = n;
-    
-    // //printf("id: %d \n", head->elem->origId);
-    // for(i=1;i<numOfRNA;i++)
-    // {
-    //  EOB * n2 = (EOB*) malloc(sizeof(EOB));
-    //  n2->next = NULL;
-    //  n2->origId = origRNASequences[array[i]]->origId;
-    //  //printf("n2->origId = %d \n", n2->origId);
-    //  n2->type = origRNASequences[array[i]]->type;
-        
-    //  //printf("id: %d \n", n2->origId);
-        
-    //  n->next = n2;
-        
-    //  n = n2;
-    // }
-    
-    // return Chain(head,orig);
-    // return Chain();
-// }
-
-
-// int main()
-// {
-//  Chain c;
-
-//  return 0;
-// }

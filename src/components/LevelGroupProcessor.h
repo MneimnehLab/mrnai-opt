@@ -10,7 +10,8 @@
 #include "Weights.h"
 using namespace std;
 
-
+// A processor to find the optimal structure in a LevelGroup. A Level Group is a set of rnas 
+// stacked in some order.
 class LevelGroupProcessor
 {
 private:

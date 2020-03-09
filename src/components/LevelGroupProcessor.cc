@@ -29,13 +29,8 @@ vector<vector<int> > LevelGroupProcessor::GetAllGroupings()
     // In round 0, first group has k levels, and in each subsequent round, 
     // slide window up, so first group has k - 1 levels, then k - 2, and so on.
     // Variable "first" = num of levels in first group
-    for(int first=k;first>=1;first--)
+    for(int first=k; first>=1; first--)
     {
-        // cout << "\n\n\nfirst =" << first << endl;
-        // cout << "k = " << k << endl;
-        // cout << endl << endl;
-        
-
         // levelsPerGroup = {a1, a2, ..., an} where ai = num of levels in group i
         vector<int> levelsPerGroup;
 

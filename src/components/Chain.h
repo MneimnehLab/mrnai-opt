@@ -1,8 +1,3 @@
-//Even_Odd_Barrier :- EOB
-//typedef struct EOB EOB;
-//typedef struct Pointer Pointer;
-
-
 #ifndef _CHAIN_H
 #define _CHAIN_H
 
@@ -12,13 +7,18 @@
 #include "rnaseq.h"
 using namespace std;
 
-
+// A chain represents a flattened multiple-RNA input over different levels. It also contains 
+// functions to flip parts of the chain, for use in the heuristic algorithmic to find the optimal
+// permutation of RNAs. There are three types of elements in the chain: Even RNAs, Odd RNAs, and
+// Barriers. Barriers are inserted whenever a contiguous series of a single type of RNAs end 
+// (either all even or all odd), and the other type starts.
 class Chain
 {
 public:
+    // A node with a type: Even, Odd, or Barrier.
     typedef struct EOB
     {
-        int type;   //0: even, 1: odd
+        int type;   //0: even, 1: odd (, 2: barrier ?)
         int origId;
         
         struct EOB * next;
@@ -63,10 +63,6 @@ public:
     SingleRunConfig * generateSubsetConfigFromBins(int from, int to);
     void printFlatStruct2File(std::FILE * file);
     void printFlatStruct();
-
-
-    
-
 };
 
 #endif
