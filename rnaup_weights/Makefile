@@ -23,7 +23,7 @@ $(WEIGHTS_RNAUP_EXEC): $(RNAUP_OBJECTS) $(BY_BOTH_OBJECTS) $(WEIGHTS_RNAUP_OBJEC
 	$(CC) $(LDFLAGS)   $(RNAUP_OBJECTS) $(BY_BOTH_OBJECTS) $(WEIGHTS_RNAUP_OBJECTS) -o $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS)  -lm $< -o $@
 	
 clean:
 	rm -f *.o
