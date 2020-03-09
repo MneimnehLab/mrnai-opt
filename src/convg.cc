@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
 	weights.Read();
 
 	// First find the initial, random structure
-	// Chain chain = Chain::makeRandomChain(&origRNASequences);
-	vector<int> permutation {3,1,0,2};
-	Chain chain = Chain::makeGivenChain(&origRNASequences, permutation);
+	Chain chain = Chain::makeRandomChain(&origRNASequences);
+	// vector<int> permutation {3,1,0,2};
+	// Chain chain = Chain::makeGivenChain(&origRNASequences, permutation);
 	chain.printFlatStruct();
 	chain.determineStruct();
 
