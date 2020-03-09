@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <algorithm>
 #include "parser.h"
 #include "../components/rnaseq.h"
 
