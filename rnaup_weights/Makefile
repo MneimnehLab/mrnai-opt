@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -Wall -w 
-LDFLAGS=
+LDFLAGS=-lm
 
 WEIGHTS_RNAUP_SOURCE = weights_rnaup.c
 
